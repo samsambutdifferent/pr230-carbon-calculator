@@ -4,7 +4,7 @@ from co2_index_table import calculate_ingredients_co2_index, calculate_ingredien
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "https://pr230-ui-xu26by35cq-ew.a.run.app"}})
-# cors = CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})
+#cors = CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})
 
 
 @app.route('/', methods=['POST'])
