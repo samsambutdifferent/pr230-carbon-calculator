@@ -2,3 +2,4 @@ flask
 flask-cors
 google-cloud-firestore
 firebase-admin
+python-dotenv

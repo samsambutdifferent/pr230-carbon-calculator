@@ -1,10 +1,13 @@
 from flask import Flask, request
 from flask_cors import CORS
 from co2_index_table import calculate_ingredients_co2_index, calculate_ingredient_co2_index
+import os
+from dotenv import load_dotenv
+load_dotenv()
+UI_URL = os.getenv("UI_URL")
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "https://pr230-ui-xu26by35cq-ew.a.run.app"}})
-#cors = CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})
+cors = CORS(app, resources={r"*": {"origins": UI_URL}})
 
 
 @app.route('/', methods=['POST'])
