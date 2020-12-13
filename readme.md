@@ -18,14 +18,13 @@ py -m pip install -r requirements.txt
 ### run
 
 ```bash
-python app.py
-```
-
-OR 
-
-```bash
     export FLASK_APP=app.py
     export FLASK_ENV=development
+    flask run --port=1081
+
+### windows ver
+    set FLASK_APP=app.py
+    set FLASK_ENV=development
     flask run --port=1081
 
 ```
