@@ -1,19 +1,11 @@
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
 
-cred = credentials.Certificate('./key.json')
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-
-
-def calculate_ingredients_co2_index(ingredientList):
+def calculate_ingredients_co2_index(ingredientList, db):
     '''
         Sum together all co2 values to get total
     '''
     totalSum = 0
     for item in ingredientList:
-        passed, value = calculate_ingredient_co2_index(item.get('name'), item.get('weight'))
+        passed, value = calculate_ingredient_co2_index(item.get('name'), item.get('weight'), db)
         if passed:
             totalSum += value
             continue
@@ -22,7 +14,7 @@ def calculate_ingredients_co2_index(ingredientList):
     return True, totalSum
         
 
-def calculate_ingredient_co2_index(name, weight):
+def calculate_ingredient_co2_index(name, weight, db):
     '''
         Get c02 per gram value from co2 index table
     '''
