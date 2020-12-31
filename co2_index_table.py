@@ -23,7 +23,7 @@ def calculate_ingredient_co2_index(name, weight, db):
     if doc.exists:
         doc_data = doc.to_dict()
         co2_index_per_g = doc_data.get('co2_index_per_g')
-        co2ValperGram = co2_index_per_g * weight
+        co2ValperGram = co2_index_per_g * float(weight)
         return True, co2ValperGram
     else:
         print(f'No such document: {name}')
