@@ -5,10 +5,11 @@ from co2_equivalents import calculate_equivalent_values
 import os
 from dotenv import load_dotenv
 load_dotenv()
-UI_URL = os.getenv("UI_URL")
+UI_URL_ONE = os.getenv("UI_URL_ONE")
+UI_URL_TWO = os.getenv("UI_URL_TWO")
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": UI_URL}})
+cors = CORS(app, resources={r"*": {"origins": [UI_URL_ONE, UI_URL_TWO]}})
 
 import firebase_admin
 from firebase_admin import credentials
