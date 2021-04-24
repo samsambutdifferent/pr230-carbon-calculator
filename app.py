@@ -14,6 +14,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
+import sys
+
 cred = credentials.Certificate('./key.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -52,10 +54,13 @@ def calculate_carbon_index():
         if len(ingredients) > 0:
             passed, value = calculate_ingredients_co2e_index(ingredients, db)
             if passed:
+                sys.stdout.flush()
                 return str(value), 200
             else:
+                sys.stdout.flush()
                 return "Record not found", 400 
         else:
+            sys.stdout.flush()
             return "Malformed request", 400 
 
     except Exception as e:
