@@ -48,6 +48,7 @@ def calculate_carbon_index():
     """
     try:
         ingredients = request.get_json()
+        print(f"ingredients: {ingredients}")
         if len(ingredients) > 0:
             passed, value = calculate_ingredients_co2e_index(ingredients, db)
             if passed:
