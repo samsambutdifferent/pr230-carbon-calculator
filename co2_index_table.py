@@ -26,9 +26,7 @@ def calculate_co2e_value(db, name, weight, select_type=None):
     
     if doc.exists:
         doc_data = doc.to_dict()
-        print(doc_data)
         default = doc_data["default"]
-        print(default)
         value = doc_data[default]
 
         co2e_val_per_gram = value * float(weight)
