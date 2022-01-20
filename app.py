@@ -68,6 +68,39 @@ def calculate_carbon_index():
         return f"unable to calculate food item co2e index"
 
 
+@app.route('/calculateindexandequivalents', methods=['POST'])
+def calculate_carbon_index_and_equivalents():
+    """returns the co2e and equivalents of a list of food items
+        params:
+            type: list[dict]
+            fomat: [{"name": "ingredient name", "weight"; 0.5}, ..]
+        return:
+            type: object
+            format: {"co2e": float, "equivalents": []}
+    """
+    try:
+        ingredients = request.get_json()
+        print(f"ingredients: {ingredients}")
+        if len(ingredients) > 0:
+            passed, value = calculate_ingredients_co2e_index(ingredients, db)
+            if passed:
+
+                equivalents = calculate_equivalent_values(value, db)
+                print(equivalents)
+
+                sys.stdout.flush()
+                return {"co2e": value, "equivalents": equivalents}, 200
+            else:
+                sys.stdout.flush()
+                return "Record not found", 400 
+        else:
+            sys.stdout.flush()
+            return "Malformed request", 400 
+
+    except Exception as e:
+        print(f"unable to calculate food item co2e index, ERROR: {str(e)}")
+        return f"unable to calculate food item co2e index"
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)    
