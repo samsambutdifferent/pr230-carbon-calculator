@@ -11,6 +11,6 @@ def calculate_equivalent_values(carbon_value, db):
     docs = db.collection(u'equivalency_conversion_factors').stream()
     for doc in docs:
         dic = doc.to_dict()
-        equivalents.append({'value': dic.get('value') * carbon_value, 'name': dic.get('type'), 'unit': dic.get('unit')})
+        equivalents.append({'value': dic.get('value') * carbon_value,'unit_value': dic.get('value'), 'name': dic.get('type'), 'unit': dic.get('unit')})
 
     return(equivalents)
