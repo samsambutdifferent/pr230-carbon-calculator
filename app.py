@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from co2_index_table import calculate_ingredients_co2e_index
 from co2_equivalents import calculate_equivalent_values
+from tree_offset import calculate_offset_cost
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -80,16 +81,20 @@ def calculate_carbon_index_and_equivalents():
     """
     try:
         ingredients = request.get_json()
-        print(f"ingredients: {ingredients}")
         if len(ingredients) > 0:
-            passed, value = calculate_ingredients_co2e_index(ingredients, db)
-            if passed:
+            passed, co2e_value = calculate_ingredients_co2e_index(ingredients, db)
 
-                equivalents = calculate_equivalent_values(value, db)
-                print(equivalents)
+            if passed:
+                equivalents = calculate_equivalent_values(co2e_value, db)
+
+                one_pound_offsets = calculate_offset_cost(co2e_value / 1000, offset=1)
 
                 sys.stdout.flush()
-                return {"co2e": value, "equivalents": equivalents}, 200
+                return {
+                            "co2e": co2e_value,
+                            "equivalents": equivalents,
+                            "one_pound_offsets": one_pound_offsets
+                        }, 200
             else:
                 sys.stdout.flush()
                 return "Record not found", 400 
